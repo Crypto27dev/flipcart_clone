@@ -1,0 +1,32 @@
+.container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #006aaf;
+  color: #f8f8f8;
+  pointer-events: none;
+  align-items: center;
+  justify-content: center;
+}
+.img{
+    width: 50%;
+    opacity: 50%;
+    object-fit: contain;
+}
+.para{
+    font-size: 16px;
+    opacity: 85%;
+    padding-top: 5px;
+}
+
+.heading{
+  opacity: 95%;
+}
+.text-container{
+  text-align: center;
+  width: 50%;
+}
