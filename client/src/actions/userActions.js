@@ -57,3 +57,13 @@ export const updateEmail = (email) => ({
     email,
   },
 });
+
+export const modalOpen = () => ({
+  type: actionType.OPEN_MODAL,
+  payload: {},
+});
+
+export const modalClose = () => ({
+  type: actionType.CLOSE_MODAL,
+  payload: {},
+});

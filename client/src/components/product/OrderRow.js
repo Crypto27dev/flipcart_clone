@@ -11,11 +11,18 @@ const useStyle = makeStyles((theme) => ({
     boxShadow: "0 -2px 10px 0 rgb(0 0 0 / 10%)",
     borderTop: "1px solid #f0f0f0",
     justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      padding: "25px 30px",
+    },
   },
   image: {
     width: "60%",
     maxHeight:150,
     objectFit: "contain",
+    [theme.breakpoints.down("sm")]: {
+      margin:"15px 0",
+      width: "100%",
+    },
   },
   price: {
     fontSize: 20,
@@ -39,6 +46,15 @@ const useStyle = makeStyles((theme) => ({
       cursor: "pointer",
       color: "#2874f0",
     },
+  },
+  paymentDetails:{
+    paddingLeft:"2%",
+    [theme.breakpoints.down("xs")]: {
+      display:"flex",
+      justifyContent:"space-between",
+      paddingTop:10,
+      paddingLeft:0,
+    },
   }
 }));
 
@@ -52,7 +68,7 @@ function OrderRow({ order }) {
       {order?.items?.map((item, index) => (
         <Box className={classes.itemRow}>
           <Grid container>
-            <Grid item lg={2} md={2}>
+            <Grid item lg={2} md={2} sm={3} xs={12}>
               {/* Image */}
               <Box>
                 <img
@@ -62,7 +78,7 @@ function OrderRow({ order }) {
                 />
               </Box>
             </Grid>
-            <Grid item lg={3} md={3}>
+            <Grid item lg={3} md={3} sm={3} xs={8}>
               {/* Title */}
               <Link to={`/product/${order.productDetails[index]._id}`}>
                 <Typography className={classes.itemTitle} >
@@ -70,12 +86,12 @@ function OrderRow({ order }) {
                 </Typography>
               </Link>
             </Grid>
-            <Grid item lg={2} md={2} className={classes.centerItems}>
+            <Grid item lg={2} md={2} sm={3} xs={4} className={classes.centerItems}>
               {/* Price */}
               <span className={classes.price}>₹{item.price}</span>
             </Grid>
-            <Grid item lg={2} md={2} style={{ paddingLeft: "2%" }}>
-              {/* Price */}
+            <Grid item lg={2} md={2} sm={3} xs={12} className={classes.paymentDetails}>
+              {/* Payment Mode */}
               <Typography className={classes.text}>
                 {orderDate.toLocaleDateString()}
               </Typography>
@@ -83,7 +99,7 @@ function OrderRow({ order }) {
                 {order.paymentMode === "online" ? "Online" : "Cash on Delivery"}
               </Typography>
             </Grid>
-            <Grid item lg={3} md={3}>
+            <Grid item lg={3} md={3} sm={12} xs={12}>
               {/* Address */}
               <Box>
                 <Typography className={classes.text}>

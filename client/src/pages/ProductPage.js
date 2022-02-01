@@ -10,6 +10,7 @@ import { fassured } from "../constants/data";
 import ProductDetail from "../components/product/ProductDetail";
 import ProductImageSlider from "../components/product/ProductImageSlider";
 import LoaderSpinner from "../components/LoaderSpinner";
+import ToastMessageContainer from "../components/ToastMessageContainer";
 
 const useStyles = makeStyles((theme) => ({
   component: {
@@ -19,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     background: "#FFFFFF",
-    // margin: '0 80px',
     display: "flex",
     [theme.breakpoints.down("md")]: {
       margin: 0,
+      padding:"0 7px",
     },
   },
   rightContainer: {
@@ -76,7 +77,9 @@ function ProductPage() {
 
   useEffect(() => {
     if (Object.keys(product).length > 0) {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
     }
   }, [product]);
 
@@ -124,6 +127,7 @@ function ProductPage() {
           </Grid>
         </Grid>
       )}
+      <ToastMessageContainer />
     </Box>
   );
 }

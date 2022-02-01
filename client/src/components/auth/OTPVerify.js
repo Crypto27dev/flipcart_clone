@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import OtpInput from "react-otp-input";
+import { useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/styles";
 import { Button, CircularProgress, Link } from "@material-ui/core";
 
 import toastMessage from "../../utils/toastMessage";
+import authentication from "../../adapters/authentication";
+import useQuery from "../../hooks/useQuery";
 
-import ToastMessageContainer from "../ToastMessageContainer";
+import { modalClose, setIsAuthenticate, setUserInfo } from "../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   buttonProgress: {
@@ -29,8 +32,12 @@ function OTPVerify({
 }) {
   const [otp, setOTP] = useState("");
   const [loading, setLoading] = useState(false);
-  const { OTPResult } = useSelector((state) => state.userReducer);
+  const { OTPResult, popupLogin } = useSelector((state) => state.userReducer);
+
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const query = useQuery();
 
   useEffect(() => {
     toastMessage(`Verification code send to ${phoneNumber}`, "success");
@@ -72,8 +79,24 @@ function OTPVerify({
       const res = await axios.post("/accounts/login-with-phone", {
         phone: phoneNumber,
       });
+
+      const { isAuth, user } = await authentication();
+      dispatch(setIsAuthenticate(isAuth));
+      dispatch(setUserInfo(user));
+
       setLoading(false);
-      window.location.replace("/");
+
+      //Modal Close
+      if (popupLogin) {
+        dispatch(modalClose());
+      }
+
+      if (query.get("ref")) {
+        let routeString = query.get("ref");
+        history.replace(`/${routeString}`);
+      } else {
+        history.replace("/");
+      }
     } catch (error) {
       setLoading(false);
       toastMessage("Something went wrong. Please login later.", "error");
@@ -99,7 +122,6 @@ function OTPVerify({
   };
   const handleChange = (otp) => setOTP(otp);
   return (
-    <>
       <div
         style={{
           display: "flex",
@@ -148,8 +170,6 @@ function OTPVerify({
           )}
         </Button>
       </div>
-      <ToastMessageContainer />
-    </>
   );
 }
 

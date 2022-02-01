@@ -13,7 +13,6 @@ import { setMobileNumber, setOTPResult } from "../../actions/userActions";
 import { setIsLogin } from "../../actions/userActions";
 import toastMessage from "../../utils/toastMessage";
 
-import ToastMessageContainer from "../ToastMessageContainer";
 
 const useStyles = makeStyles((theme) => ({
   signupInputs: {
@@ -178,7 +177,6 @@ function SignupStep1({ handleActions }) {
       >
         Existing User? Log in
       </Button>
-      <ToastMessageContainer />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,6 +17,15 @@ import Button from "@material-ui/core/Button";
 import { CircularProgress } from "@material-ui/core";
 
 import toastMessage from "../../utils/toastMessage";
+import authentication from "../../adapters/authentication";
+import {
+  modalClose,
+  setIsAuthenticate,
+  setUserInfo,
+} from "../../actions/userActions";
+
+import useQuery from "../../hooks/useQuery";
+import { makeCapitalizeText } from "../../utils/makeCapitalizeText";
 
 const useStyles = makeStyles((theme) => ({
   signupInputs: {
@@ -60,7 +70,7 @@ function SignupStep2() {
   const [loading, setLoading] = useState(false);
   const [submitCount, setSubmitCount] = useState(0);
   const initial = useRef(true);
-  const { phoneNumber } = useSelector((state) => state.userReducer);
+  const { phoneNumber, popupLogin } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     if (initial.current === true) {
@@ -77,8 +87,11 @@ function SignupStep2() {
     }
   }, [submitCount]);
 
-  //variables
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const query = useQuery();
+
   const regName = /^[a-zA-Z]+$/;
   const regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,20}$/;
 
@@ -144,18 +157,32 @@ function SignupStep2() {
     }
   };
 
-
   const completeSignup = async () => {
     setLoading(true);
     try {
       const res = await axios.post("/accounts/signup", {
-        fname: values.fName,
-        lname: values.lName,
+        fname: makeCapitalizeText(values.fName),
+        lname: makeCapitalizeText(values.lName),
         password: values.password,
         phone: phoneNumber,
       });
+      const { isAuth, user } = await authentication();
+      dispatch(setIsAuthenticate(isAuth));
+      dispatch(setUserInfo(user));
+
       setLoading(false);
-      window.location.replace('/');
+
+      //Modal Close
+      if (popupLogin) {
+        dispatch(modalClose());
+      }
+
+      if (query.get("ref")) {
+        let routeString = query.get("ref");
+        history.replace(`/${routeString}`);
+      } else {
+        history.replace("/");
+      }
     } catch (error) {
       setLoading(false);
       toastMessage("Something went wrong. Please sign up later.", "error");

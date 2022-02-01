@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-
 
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -17,17 +17,23 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { CircularProgress } from "@material-ui/core";
 
+import useQuery from "../../hooks/useQuery";
+
 import {
+  modalClose,
+  setIsAuthenticate,
   setIsLogin,
   setMobileNumber,
   setOTPResult,
+  setUserInfo,
 } from "../../actions/userActions";
 
 import toastMessage from "../../utils/toastMessage";
 import sendOtp from "../../utils/sendOTP";
 
 import OTPVerify from "./OTPVerify";
-import ToastMessageContainer from "../ToastMessageContainer";
+import authentication from "../../adapters/authentication";
+
 
 const useStyles = makeStyles((theme) => ({
   inputs: {
@@ -96,9 +102,13 @@ function Login() {
     }
   }, [submitCount]);
 
-  //variables
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const query = useQuery();
+
+  const { popupLogin } = useSelector((state) => state.userReducer);
+  
   const regNumeric = /^[0-9\b]+$/;
   const regPhone = /^[6-9]\d{9}$/;
 
@@ -181,7 +191,21 @@ function Login() {
           phone: values.phone,
           password: values.password,
         });
-        window.location.replace("/");
+        const { isAuth, user } = await authentication();
+        dispatch(setIsAuthenticate(isAuth));
+        dispatch(setUserInfo(user));
+
+        //Modal Close
+        if(popupLogin){
+          dispatch(modalClose());
+        }
+
+        if (query.get("ref")) {
+          let routeString = query.get("ref");
+          history.replace(`/${routeString}`);
+        } else {
+          history.replace("/");
+        }
       }
     } catch (error) {
       setLoading(false);
@@ -253,7 +277,6 @@ function Login() {
 
   return (
     <>
-      <ToastMessageContainer />
       {isLoginComponent ? (
         <>
           <TextField
@@ -362,7 +385,6 @@ function Login() {
           setIsLoginComponent={setIsLoginComponent}
         />
       )}
-      
     </>
   );
 }

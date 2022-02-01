@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+import { isMobile, isDesktop, isTablet, deviceType,    } from 'react-device-detect';
 //Custom import
 import Header from "./components/header/Header";
 
@@ -11,20 +11,18 @@ import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
 import MyAccountsPage from "./pages/MyAccountsPage";
 import OrdersPage from "./pages/OrdersPage";
-
-//css
-import "./App.css";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderFailedPage from "./pages/OrderFailedPage";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 
-function App() {
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 960px)",
-  });
+//css
+import "./App.css";
+
+
+function App() { 
   return (
     <div className="app">
-      {isDesktopOrLaptop ? (
+      {isDesktop ? (
         <>
           <Header />
           <Switch>
@@ -68,9 +66,9 @@ function App() {
         <div className="container">
           <img className="img" src="/monitors-laptop.png" alt="Mobile Laptop" />
           <div className="text-container">
-            <h2 className="heading">Please use big Screen</h2>
+            <h2 className="heading">Please use Laptop or desktop</h2>
             <p className="para">
-              We don't support small screen yet. Please use big screen for the
+              We don't support small screen yet. Please use laptop or desktop for the
               best experience.
             </p>
           </div>

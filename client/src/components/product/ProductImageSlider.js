@@ -15,7 +15,6 @@ import {
   removeFromWishlist,
 } from "../../actions/wishlistActions";
 
-import ToastMessageContainer from "../ToastMessageContainer";
 
 const useStyle = makeStyles((theme) => ({
   leftContainer: {
@@ -147,7 +146,6 @@ const ProductImageSlider = ({ product }) => {
       >
         <Flash /> Buy Now
       </Button>
-      <ToastMessageContainer />
     </Box>
   );
 };

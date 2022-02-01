@@ -49,11 +49,12 @@ export const navData = [
 // ########## Posters ##########################
 
 export const bannerData = [
-  "https://rukminim1.flixcart.com/flap/1000/1000/image/c4328bf90ce6d94c.jpg",
-  "https://rukminim1.flixcart.com/flap/1000/1000/image/17b0a55e35867de0.jpg",
-  "https://rukminim1.flixcart.com/flap/1000/1000/image/0317c14a3f4332d1.jpg",
-  "https://rukminim1.flixcart.com/flap/1000/1000/image/50da4bc3bdfd09fe.jpeg",
-  "https://rukminim1.flixcart.com/flap/1000/1000/image/2516201758433d02.jpeg",
+  "https://rukminim1.flixcart.com/flap/1000/1000/image/5655d35aa959ffe8.jpg",
+  "https://rukminim1.flixcart.com/flap/1000/1000/image/c7d2b98b5ac01799.jpg",
+  "https://rukminim1.flixcart.com/flap/1000/1000/image/938d2f267807952f.jpg",
+  "https://rukminim1.flixcart.com/flap/1000/1000/image/d72cac86423a498b.jpg",
+  "https://rukminim1.flixcart.com/flap/1000/1000/image/a9193a4988ff1328.jpg",
+  "https://rukminim1.flixcart.com/flap/1000/1000/image/e284b77bb80114f7.jpg",
 ];
 
 export const posterLinks = {

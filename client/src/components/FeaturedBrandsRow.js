@@ -11,6 +11,7 @@ import "react-multi-carousel/lib/styles.css";
 const useStyles = makeStyles({
   row_wrapper: {
     width: "99%",
+    minWidth:960,
     margin: "5px 0px",
     padding: "5px 0px",
     paddingBottom:10,
@@ -75,7 +76,7 @@ function FeaturedBrandsRow({ brandsUrls }) {
         >
           {brandsUrls?.map((url, index) => (
             <Box key={index}>
-              <img src={url} alt="Featured Brands" style={{ width: "100%", padding:"0px 5px", cursor:"pointer" }} />
+              <img src={url} alt="Featured Brands" style={{ width: "100%", padding:"0px 5px", cursor:"pointer", }} />
             </Box>
           ))}
         </Carousel>

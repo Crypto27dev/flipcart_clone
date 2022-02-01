@@ -47,6 +47,7 @@ export const removeFromCart = (id) => async (dispatch, getState) => {
 
 export const clearCart = () => async (dispatch, getState) => {
   const { isAuthenticate, user } = getState().userReducer;
+
   if (isAuthenticate) {
     try {
       await axios.delete("/cart/clear-cart", {
@@ -64,20 +65,31 @@ export const clearCart = () => async (dispatch, getState) => {
 
 export const getCartItems = () => async (dispatch, getState) => {
   const { isAuthenticate, user } = getState().userReducer;
+  const { cartItems } = getState().cartReducer;
+
   if (isAuthenticate) {
     try {
       const { data } = await axios.get(`/cart/get-items/${user._id}`);
-      const cartItems = [];
-
-      data?.map((value) => {
-        cartItems.push(value.productDetails[0]);
-      });
-      dispatch({
-        type: actionType.SET_CART_ITEMS,
-        payload: {
-          cartItems: cartItems,
-        },
-      });
+      console.log(data.length);
+      if (data.length > 0) {
+        data?.map((value) => {
+          var isExist = false;
+          cartItems.forEach((item) => {
+            if (item._id == value.productDetails[0]._id) {
+              isExist = true;
+            }
+          });
+          if (!isExist) {
+            cartItems.push(value.productDetails[0]);
+          }
+        });
+        dispatch({
+          type: actionType.SET_CART_ITEMS,
+          payload: {
+            cartItems: cartItems,
+          },
+        });
+      }
     } catch (error) {}
   }
 };

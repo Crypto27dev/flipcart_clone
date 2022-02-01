@@ -5,7 +5,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useDispatch } from "react-redux";
 import { deleteAddress } from "../../actions/addressActions";
 import toastMessage from "../../utils/toastMessage";
-import ToastMessageContainer from "../ToastMessageContainer";
+
 const useStyles = makeStyles((theme) => ({
   card: {
     color: "#2874f0",
@@ -132,7 +132,6 @@ function AddressCard({ address, isCheckout = false }) {
           </Box>
         )}
       </Box>
-      <ToastMessageContainer />
     </>
   );
 }

@@ -6,6 +6,8 @@ import { makeShortText } from "../../utils/makeShortText";
 import { fassured } from "../../constants/data";
 
 import GroupButton from "./GroupButton";
+import AlertDialogBox from "../AlertDialgBox";
+import { useState } from "react";
 
 const useStyle = makeStyles({
   component: {
@@ -30,7 +32,7 @@ const useStyle = makeStyles({
   image: {
     height: 110,
     width: 110,
-    objectFit:"contain",
+    objectFit: "contain",
   },
   mid: {
     margin: 20,
@@ -51,48 +53,64 @@ const useStyle = makeStyles({
   },
 });
 
-const CartItem = ({ item, removeItemFromCart }) => {
+const CartItem = ({ item }) => {
   const classes = useStyle();
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+
+  const dialogClose = () => {
+    setIsOpenDialog(false);
+  };
+
+  const dialogOpen = () => {
+    setIsOpenDialog(true);
+  };
 
   return (
-    <Card className={classes.component}>
-      <Box className={classes.leftComponent}>
-        <img src={item.url} className={classes.image} />
-        <GroupButton product={item} />
-      </Box>
-      <Box className={classes.mid}>
-        <Link to={`/product/${item._id}`}>
-          <Typography className={classes.itemTitle}>
-            {item.title.longTitle && makeShortText(item.title.longTitle)}
-          </Typography>
+    <>
+      <Card className={classes.component}>
+        <Box className={classes.leftComponent}>
+          <img src={item.url} className={classes.image} />
+          <GroupButton product={item} />
+        </Box>
+        <Box className={classes.mid}>
+          <Link to={`/product/${item._id}`}>
+            <Typography className={classes.itemTitle}>
+              {item.title.longTitle && makeShortText(item.title.longTitle)}
+            </Typography>
 
-          <Typography
-            className={clsx(classes.greyTextColor, classes.smallText)}
-            style={{ marginTop: 10 }}
-          >
-            Seller:RetailNet
-            <span>
-              <img src={fassured} style={{ height: 18, marginLeft: 10 }} />
-            </span>
-          </Typography>
-          <Typography style={{ margin: "20px 0", color:"#000" }}>
-            <span className={classes.price}>₹{item.price.cost}</span>
-            &nbsp;&nbsp;&nbsp;
-            <span className={classes.greyTextColor}>
-              <strike>₹{item.price.mrp}</strike>
-            </span>
-            &nbsp;&nbsp;&nbsp;
-            <span style={{ color: "#388E3C" }}>{item.price.discount} off</span>
-          </Typography>
-        </Link>
-        <Button
-          className={classes.remove}
-          onClick={() => removeItemFromCart(item._id)}
-        >
-          Remove
-        </Button>
-      </Box>
-    </Card>
+            <Typography
+              className={clsx(classes.greyTextColor, classes.smallText)}
+              style={{ marginTop: 10 }}
+            >
+              Seller:RetailNet
+              <span>
+                <img src={fassured} style={{ height: 18, marginLeft: 10 }} />
+              </span>
+            </Typography>
+            <Typography style={{ margin: "20px 0", color: "#000" }}>
+              <span className={classes.price}>₹{item.price.cost}</span>
+              &nbsp;&nbsp;&nbsp;
+              <span className={classes.greyTextColor}>
+                <strike>₹{item.price.mrp}</strike>
+              </span>
+              &nbsp;&nbsp;&nbsp;
+              <span style={{ color: "#388E3C" }}>
+                {item.price.discount} off
+              </span>
+            </Typography>
+          </Link>
+          <Button className={classes.remove} onClick={dialogOpen}>
+            Remove
+          </Button>
+        </Box>
+      </Card>
+      <AlertDialogBox
+        isOpenDialog={isOpenDialog}
+        handleClose={dialogClose}
+        itemId={item._id}
+        type="cart"
+      />
+    </>
   );
 };
 

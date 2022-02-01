@@ -14,8 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-
 import {
+  modalClose,
+  modalOpen,
   setIsAuthenticate,
   setPopupLogin,
   setUserInfo,
@@ -25,9 +26,9 @@ import toastMessage from "../../utils/toastMessage";
 
 import AuthPage from "../../pages/AuthPage";
 import ProfileMenu from "./ProfileMenu";
-import ToastMessageContainer from "../ToastMessageContainer";
+import { clearCart } from "../../actions/cartActions";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   headerMenu: {
     display: "flex",
     alignItems: "center",
@@ -35,10 +36,13 @@ const useStyles = makeStyles({
     "& > *": {
       marginRight: 30,
     },
-  },  
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
   login_btn: {
     color: "#2874f0",
-    marginLeft:"7%",
+    marginLeft: "7%",
     fontWeight: 600,
     textTransform: "capitalize",
     cursor: "pointer",
@@ -62,12 +66,12 @@ const useStyles = makeStyles({
     fontWeight: 500,
     TextDecoration: "none",
   },
-});
+}));
 
 function HeaderMenu() {
   const [open, setOpen] = useState(false);
 
-  const { popupLogin, isAuthenticate } = useSelector(
+  const { popupLogin, isAuthenticate, isModalOpen } = useSelector(
     (state) => state.userReducer
   );
   const { cartItems } = useSelector((state) => state.cartReducer);
@@ -96,6 +100,7 @@ function HeaderMenu() {
       });
       dispatch(setUserInfo({}));
       dispatch(setIsAuthenticate(false));
+      dispatch(clearCart());
       window.location.replace("/");
     } catch (error) {
       toastMessage("Something went wrong. Please try again later", "error");
@@ -103,10 +108,10 @@ function HeaderMenu() {
   };
 
   const handleClickOpen = () => {
-    setOpen(true);
+    dispatch(modalOpen());
   };
   const handleClose = () => {
-    setOpen(false);
+    dispatch(modalClose());
   };
 
   return (
@@ -143,14 +148,12 @@ function HeaderMenu() {
       </Link>
 
       {/* ########## Login Dialog Box  #########*/}
-      <Dialog onClose={handleClose} open={open}>
+      <Dialog onClose={handleClose} open={isModalOpen}>
         <DialogContent style={{ width: "100%" }}>
           <AuthPage popup={true} />
         </DialogContent>
       </Dialog>
 
-      {/* ########## Toast Message Container  #########*/}
-      <ToastMessageContainer />
     </Box>
   );
 }

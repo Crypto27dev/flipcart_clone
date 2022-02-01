@@ -9,6 +9,7 @@ import OrderRow from "../components/product/OrderRow";
 import LoaderSpinner from "../components/LoaderSpinner";
 
 import { noOrdersUrl } from "../constants/data";
+import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
   component: {
@@ -18,9 +19,11 @@ const useStyle = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: "15px 0",
     },
+    [theme.breakpoints.down("md")]: {
+      marginBottom: 20,
+    },
   },
   leftComponent: {
-    // width: '67%',
     paddingRight: 15,
     [theme.breakpoints.down("sm")]: {
       marginBottom: 15,
@@ -36,14 +39,16 @@ const useStyle = makeStyles((theme) => ({
     background: "#fff",
     boxShadow: "0 -2px 10px 0 rgb(0 0 0 / 10%)",
     borderTop: "1px solid #f0f0f0",
+    [theme.breakpoints.down("md")]: {
+      padding:"15px 0px"
+    },
   },
   emptyComponent: {
-    marginTop: 55,
-    padding: "30px 135px",
-    paddingTop: 120,
-    [theme.breakpoints.down("sm")]: {
-      padding: "15px 0",
-    },
+    height:"90vh",
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    flexDirection:"column",
     textAlign: "center",
   },
   btn: {
@@ -55,6 +60,7 @@ const useStyle = makeStyles((theme) => ({
   },
   image: {
     width: "20%",
+    minWidth:200,
     objectFit:"contain"
   },
 }));
@@ -65,14 +71,18 @@ function OrdersPage() {
   const [isLoading, setIsLoading] = useState(true);
   const { orderDetails } = useSelector((state) => state.orderReducer);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     if (!isAuthenticate) {
-      window.location.replace("/login");
+      history.replace("/login?ref=orders");
     }
     dispatch(getOrderDetails());
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
   }, [isAuthenticate]);
+
 
   return isLoading ? (
     <LoaderSpinner />

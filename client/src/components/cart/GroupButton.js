@@ -5,7 +5,6 @@ import { ButtonGroup, Button, makeStyles } from "@material-ui/core";
 import { updateQty } from "../../actions/cartActions";
 import toastMessage from "../../utils/toastMessage";
 
-import ToastMessageContainer from "../ToastMessageContainer";
 
 const useStyle = makeStyles({
   component: {
@@ -52,7 +51,6 @@ const GroupedButton = ({ product }) => {
           +
         </Button>
       </ButtonGroup>
-      <ToastMessageContainer/>
     </>
   );
 };

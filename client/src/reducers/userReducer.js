@@ -4,6 +4,7 @@ const initialState = {
   isLogin: true,
   phoneNumber: "",
   popupLogin: true,
+  isModalOpen: false,
   OTPResult: {},
   isAuthenticate: false,
   user: {},
@@ -41,6 +42,12 @@ const userReducer = (state = initialState, action) => {
           email: action.payload.email,
         },
       };
+    case actionType.OPEN_MODAL:
+      return { ...state, isModalOpen: true };
+    
+      case actionType.CLOSE_MODAL:
+      return { ...state, isModalOpen: false };
+
     default:
       return state;
   }

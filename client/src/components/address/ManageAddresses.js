@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 import { getAddresses, updateAddrComState } from "../../actions/addressActions";
 
-import ToastMessageContainer from "../ToastMessageContainer";
 import AddressCard from "./AddressCard";
 import AddAddress from "./AddAddress";
+import useQuery from "../../hooks/useQuery";
 
 const useStyles = makeStyles((theme) => ({
   component: {
@@ -38,11 +39,15 @@ const useStyles = makeStyles((theme) => ({
 function ManageAddresses() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const query = useQuery();
   const { openAddAddress, addresses } = useSelector(
     (state) => state.addressReducer
   );
   useEffect(() => {
     dispatch(getAddresses());
+    if (query.get("ref")) {
+      dispatch(updateAddrComState(true));
+    }
   }, [dispatch]);
   return (
     <>
@@ -71,7 +76,6 @@ function ManageAddresses() {
             <AddressCard address={address} key={index} />
           ))}
       </Box>
-      <ToastMessageContainer />
     </>
   );
 }

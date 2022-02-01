@@ -18,6 +18,7 @@ import "../../styles/ProductRow.css";
 const useStyles = makeStyles({
   row_wrapper: {
     width: "99%",
+    minWidth:960,
     margin: "5px 3px",
     padding: 5,
     backgroundColor: "#ffffff",
@@ -109,7 +110,7 @@ function ProductRow({ isFirstRow = false, categoryName, title }) {
       className={classes.row_wrapper}
       style={
         isFirstRow
-          ? { width: "84.6%", paddingTop: 10, marginTop: 5, marginBottom: 0 }
+          ? { width: "84.6%", paddingTop: 10, marginTop: 5, marginBottom: 0, minWidth:750 }
           : {}
       }
     >

@@ -1,19 +1,12 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Box,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Box, makeStyles, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import StarIcon from "@material-ui/icons/Star";
 
 import { makeShortText } from "../../utils/makeShortText";
-import toastMessage from "../../utils/toastMessage";
 import { fassured } from "../../constants/data";
-
-import { removeFromWishlist } from "../../actions/wishlistActions";
+import AlertDialogBox from "../AlertDialgBox";
 
 const useStyle = makeStyles({
   component: {
@@ -40,7 +33,7 @@ const useStyle = makeStyles({
     height: 110,
     width: 110,
     marginRight: 20,
-    objectFit:"contain",
+    objectFit: "contain",
   },
   mid: {
     margin: 20,
@@ -76,8 +69,9 @@ const useStyle = makeStyles({
   },
 });
 function WishlistItem({ item }) {
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+
   const classes = useStyle();
-  const dispatch = useDispatch();
 
   var rate = (Math.random() * 5).toFixed(1);
   var reviewCount = Math.round(Math.random() * 5000 + 1);
@@ -85,49 +79,60 @@ function WishlistItem({ item }) {
     rate = 3.2;
   }
 
-  const removeItem = () => {
-    dispatch(removeFromWishlist(item._id));
-    toastMessage("Item Removed", "success");
+  const dialogClose = () => {
+    setIsOpenDialog(false);
+  };
+
+  const dialogOpen = () => {
+    setIsOpenDialog(true);
   };
 
   return (
-    <Box className={classes.component}>
-      <Link to={`/product/${item._id}`}>
-        <Box className={classes.itemWrapper}>
-          <img src={item.url} className={classes.image} />
-          <Box className={classes.itemInfo}>
-            <Typography className={classes.itemTitle}>
-              {item.title.longTitle && makeShortText(item.title.longTitle)}
-            </Typography>
-            <Box style={{ display: "flex", alignItems: "center" }}>
-              <Typography className={classes.rate}>
-                {rate} <StarIcon style={{ fontSize: 12, marginLeft: 3 }} />
+    <>
+      <Box className={classes.component}>
+        <Link to={`/product/${item._id}`}>
+          <Box className={classes.itemWrapper}>
+            <img src={item.url} className={classes.image} />
+            <Box className={classes.itemInfo}>
+              <Typography className={classes.itemTitle}>
+                {item.title.longTitle && makeShortText(item.title.longTitle)}
               </Typography>
-              <Typography className={classes.greyTextColor}>
-                ({reviewCount})
+              <Box style={{ display: "flex", alignItems: "center" }}>
+                <Typography className={classes.rate}>
+                  {rate} <StarIcon style={{ fontSize: 12, marginLeft: 3 }} />
+                </Typography>
+                <Typography className={classes.greyTextColor}>
+                  ({reviewCount})
+                </Typography>
+                <span>
+                  <img src={fassured} style={{ height: 21, marginLeft: 10 }} />
+                </span>
+              </Box>
+              <Typography style={{ margin: "15px 0" }}>
+                <span className={classes.price}>₹{item.price.cost}</span>
+                &nbsp;&nbsp;&nbsp;
+                <span className={classes.greyTextColor}>
+                  <strike>₹{item.price.mrp}</strike>
+                </span>
+                &nbsp;&nbsp;&nbsp;
+                <span style={{ color: "#388E3C" }}>
+                  {item.price.discount} off
+                </span>
               </Typography>
-              <span>
-                <img src={fassured} style={{ height: 21, marginLeft: 10 }} />
-              </span>
             </Box>
-            <Typography style={{ margin: "15px 0" }}>
-              <span className={classes.price}>₹{item.price.cost}</span>
-              &nbsp;&nbsp;&nbsp;
-              <span className={classes.greyTextColor}>
-                <strike>₹{item.price.mrp}</strike>
-              </span>
-              &nbsp;&nbsp;&nbsp;
-              <span style={{ color: "#388E3C" }}>
-                {item.price.discount} off
-              </span>
-            </Typography>
           </Box>
+        </Link>
+        <Box className={classes.rightComponent} onClick={dialogOpen}>
+          <DeleteIcon className={classes.remove} />
         </Box>
-      </Link>
-      <Box className={classes.rightComponent} onClick={removeItem}>
-        <DeleteIcon className={classes.remove} />
       </Box>
-    </Box>
+      <AlertDialogBox
+        isOpenDialog={isOpenDialog}
+        handleClose={dialogClose}
+        itemId={item._id}
+        type="wishlist"
+      />
+    </>
   );
 }
 

@@ -21,8 +21,8 @@ import { maleAvatarUrl, femaleAvatarUrl } from "../../constants/data";
 import toastMessage from "../../utils/toastMessage";
 
 import { setIsAuthenticate, setUserInfo } from "../../actions/userActions";
+import { clearCart } from "../../actions/cartActions";
 
-import ToastMessageContainer from "../ToastMessageContainer";
 
 const useStyles = makeStyles((theme) => ({
   component: {
@@ -123,6 +123,7 @@ export default function Sidebar() {
       });
       dispatch(setUserInfo({}));
       dispatch(setIsAuthenticate(false));
+      dispatch(clearCart());
       window.location.replace("/");
     } catch (error) {
       toastMessage("Something went wrong. Please try again later", "error");
@@ -223,7 +224,6 @@ export default function Sidebar() {
           <p>Logout</p>
         </Box>
       </Box>
-      <ToastMessageContainer />
     </>
   );
 }

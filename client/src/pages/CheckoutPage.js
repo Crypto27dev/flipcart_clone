@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   makeStyles,
@@ -20,13 +21,12 @@ import { setOrderItems } from "../actions/orderActions";
 
 import { shieldIcon, superCoin } from "../constants/data";
 import { post } from "../utils/paytm";
+import useQuery from "../hooks/useQuery";
 
 import TotalView from "../components/cart/TotalView";
 import AddressCard from "../components/address/AddressCard";
 import LoaderSpinner from "../components/LoaderSpinner";
-
-
-
+import ToastMessageContainer from "../components/ToastMessageContainer";
 
 const useStyle = makeStyles((theme) => ({
   component: {
@@ -167,13 +167,23 @@ const CheckoutPage = () => {
   );
   const dispatch = useDispatch();
 
+  const history = useHistory();
+  const query = useQuery();
+
   useEffect(() => {
+    //check if request from cart page or not
+    if (query.get("init") != "true") {
+      history.replace("/cart");
+    }
+
     if (isAuthenticate) {
       dispatch(getCartItems());
       dispatch(getAddresses());
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     } else {
-      window.location.replace("/login");
+      history.replace("/login?ref=checkout?init=true");
     }
   }, [isAuthenticate]);
 
@@ -186,7 +196,6 @@ const CheckoutPage = () => {
       window.location.replace("/");
     }
   }, []);
-
 
   const handleChange = () => {
     setActiveComponent({
@@ -218,7 +227,7 @@ const CheckoutPage = () => {
           paymentMode: paymentMode,
           paymentStatus: "Completed",
         });
-        dispatch(clearCart());
+        await dispatch(clearCart());
         window.location.replace("order-success");
       } catch (error) {
         console.log(error);
@@ -248,6 +257,7 @@ const CheckoutPage = () => {
           action: "https://securegw-stage.paytm.in/order/process",
           params: data,
         };
+        await dispatch(clearCart());
         post(details);
       } catch (error) {
         console.log(error);
@@ -288,9 +298,9 @@ const CheckoutPage = () => {
                   </svg>
                 </span>
                 <Typography className={classes.loginText}>
-                  Dhaval Patel
+                  {`${user.fname}  ${user.lname}`}
                   <span style={{ fontWeight: 500, marginLeft: 10 }}>
-                    +919173827571{" "}
+                    {`${user.phone} `}
                   </span>
                 </Typography>
               </Box>
@@ -384,12 +394,14 @@ const CheckoutPage = () => {
               )}
             </Box>
             {activeComponent.address && (
-              <Box className={clsx(classes.addressComponent, classes.addBtn)}>
+              <Box
+                className={clsx(classes.addressComponent, classes.addBtn)}
+                onClick={() =>
+                  history.replace("/account/addresses?ref=checkout?init=true")
+                }
+              >
                 <AddIcon style={{ marginRight: 10 }} />
-                <Typography
-                  style={{ fontSize: 16 }}
-                  onClick={() => window.location.assign("/account/addresses")}
-                >
+                <Typography style={{ fontSize: 16 }}>
                   Add a new address
                 </Typography>
               </Box>
@@ -479,6 +491,7 @@ const CheckoutPage = () => {
       ) : (
         ""
       )}
+      <ToastMessageContainer />
     </>
   );
 };

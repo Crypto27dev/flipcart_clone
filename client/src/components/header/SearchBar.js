@@ -17,15 +17,16 @@ import { makeShortText } from "../../utils/makeShortText";
 
 const useStyles = makeStyles((theme) => ({
   search: {
-    position:"absolute",
+    position: "absolute",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: "#fff",
-    marginLeft: 5,  
-    top:12,
+    marginLeft: theme.spacing(3),
+    top: 12,
     width: "30vw",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
+    [theme.breakpoints.down("md")]: {
+      width: "45vw",
+      marginLeft: "10%",
+      top: 10,
     },
   },
   searchIcon: {
@@ -38,19 +39,25 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     fontSize: 16,
+    [theme.breakpoints.down("md")]: {
+      width: "45vw",
+    },
     width: "30vw",
   },
   inputInput: {
-    width:"100%",
+    width: "100%",
     padding: theme.spacing(1),
     paddingLeft: `calc(0.1em + ${theme.spacing(2)}px)`,
   },
   listComponent: {
-    width:"32.5vw",
+    width: "30vw",
     height: 300,
     overflowY: "auto",
     background: "#ffff",
     color: "#000",
+    [theme.breakpoints.down("md")]: {
+      width: "45vw",
+    },
   },
   listItem: {
     "&:hover": {
@@ -62,11 +69,18 @@ const useStyles = makeStyles((theme) => ({
   listText: {
     margin: "0px 10px",
     color: "#000",
+    [theme.breakpoints.down("md")]: {
+     fontSize:14,
+    },
   },
   productAvatar: {
     width: 75,
     height: 75,
     objectFit: "contain",
+    [theme.breakpoints.down("md")]: {
+      width: 50,
+      height: 50,
+    },
   },
 }));
 function SearchBar() {
@@ -106,8 +120,8 @@ function SearchBar() {
             onChange={handleSearchInput}
           />
           <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
+            <SearchIcon />
+          </div>
         </div>
         {searchText && isOpen && (
           <Box boxShadow={4} className={classes.listComponent}>
@@ -119,7 +133,7 @@ function SearchBar() {
                     .includes(searchText.toLowerCase())
                 )
                 ?.map((product) => (
-                  <a target={"_blank"} href={`/product/${product._id}`}>
+                  <a href={`/product/${product._id}`}>
                     <ListItem className={classes.listItem}>
                       <ListItemAvatar className={classes.listAvatar}>
                         <img

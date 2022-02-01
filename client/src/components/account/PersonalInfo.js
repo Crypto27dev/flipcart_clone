@@ -16,7 +16,7 @@ import FormControl from "@material-ui/core/FormControl";
 import { updateEmail, updateUserInfo } from "../../actions/userActions";
 import toastMessage from "../../utils/toastMessage";
 
-import ToastMessageContainer from "../ToastMessageContainer";
+import { makeCapitalizeText } from "../../utils/makeCapitalizeText";
 
 const useStyles = makeStyles((theme) => ({
   component: {
@@ -100,12 +100,18 @@ function PersonalInfo() {
         axios
           .patch("/accounts/update-user-info", {
             id: user._id,
-            fname: values.fname,
-            lname: values.lname,
+            fname: makeCapitalizeText(values.fname),
+            lname: makeCapitalizeText(values.lname),
             gender: values.gender,
           })
           .then(() => {
-            dispatch(updateUserInfo(values.fname, values.lname, values.gender));
+            dispatch(
+              updateUserInfo(
+                makeCapitalizeText(values.fname),
+                makeCapitalizeText(values.lname),
+                values.gender
+              )
+            );
             toastMessage("Account details updated !", "success");
           })
           .catch((e) => {
@@ -421,7 +427,6 @@ function PersonalInfo() {
         style={{ verticalAlign: "middle" }}
         src="/myProfileFooter.png"
       />
-      <ToastMessageContainer />
     </>
   );
 }

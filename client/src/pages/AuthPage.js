@@ -10,6 +10,7 @@ import authentication from "../adapters/authentication";
 
 import Login from "../components/auth/Login";
 import Signup from "../components/auth/Signup";
+import ToastMessageContainer from "../components/ToastMessageContainer";
 
 import "../styles/AuthPage.css";
 
@@ -62,6 +63,7 @@ function AuthPage({ popup = false }) {
       <Backdrop className={classes.backdrop} open={isOpen}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      <ToastMessageContainer />
     </div>
   );
 }

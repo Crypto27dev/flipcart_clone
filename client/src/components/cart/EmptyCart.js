@@ -3,15 +3,20 @@ import { useSelector } from "react-redux";
 
 import { emptyCartUrl } from "../../constants/data";
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme) => ({
   component: {
     width: "80%",
+    minWidth: 500,
     height: "65vh",
     background: "#fff",
     margin: "80px 140px",
+    [theme.breakpoints.down("md")]: {
+      margin: "80px 0px",
+    },
   },
   image: {
     width: "20%",
+    minWidth: 150,
   },
   container: {
     textAlign: "center",
@@ -23,10 +28,9 @@ const useStyle = makeStyles({
     marginTop: 15,
     padding: "5px 60px",
   },
-});
+}));
 
 const EmptyCart = () => {
-  
   const classes = useStyle();
   const { isAuthenticate } = useSelector((state) => state.userReducer);
 
@@ -43,8 +47,11 @@ const EmptyCart = () => {
               className={classes.btn}
               color="primary"
               onClick={() => window.location.replace("/")}
-              style={{ background: "#2874f0", textTransform:"capitalize" }}
-            > Shop Now</Button>
+              style={{ background: "#2874f0", textTransform: "capitalize" }}
+            >
+              {" "}
+              Shop Now
+            </Button>
           </>
         ) : (
           <>
@@ -56,7 +63,7 @@ const EmptyCart = () => {
               className={classes.btn}
               color="primary"
               onClick={() => window.location.replace("/login")}
-              style={{ background: "#fb641b", textTransform:"capitalize" }}
+              style={{ background: "#fb641b", textTransform: "capitalize" }}
             >
               Login
             </Button>

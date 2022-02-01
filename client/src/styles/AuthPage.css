@@ -1,5 +1,6 @@
 .login {
   display: flex;
+  min-width: 500px;
   width: 55%;
   height: 70vh;
   margin: 0px auto;

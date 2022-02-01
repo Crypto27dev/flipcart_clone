@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import {
   Box,
@@ -18,7 +19,8 @@ import { addNewAddress, updateAddrComState } from "../../actions/addressActions"
 import { indianStates } from "../../constants/data";
 import toastMessage from "../../utils/toastMessage";
 
-import ToastMessageContainer from "../ToastMessageContainer";
+
+import useQuery from "../../hooks/useQuery";
 
 const useStyles = makeStyles((theme) => ({
   component: {
@@ -82,6 +84,8 @@ function AddAddress() {
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const query = useQuery();
 
   const handleDropDown = (event) => {
     setIndianState(event.target.value);
@@ -108,9 +112,15 @@ function AddAddress() {
     };
     try {
       await axios.post("/address/add-address", newAddressInputs);
-      dispatch(addNewAddress(newAddressInputs));
+      await dispatch(addNewAddress(newAddressInputs));
       toastMessage("New Address added", "success");
       dispatch(updateAddrComState(false));
+      
+      //If request Come from checkout
+      if (query.get("ref")) {
+        let routeString = query.get("ref");
+        history.push(`/${routeString}`);
+      }
     } catch (error) {
       toastMessage("Something went wrong", "error");
       dispatch(updateAddrComState(false));
@@ -280,7 +290,6 @@ function AddAddress() {
           Cancel
         </span>
       </form>
-      <ToastMessageContainer />
     </Box>
   );
 }

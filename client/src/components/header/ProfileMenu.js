@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Box, Divider, makeStyles, Typography } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -32,8 +33,9 @@ const useStyles = makeStyles({
 
 function ProfileMenu({ logout }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const classes = useStyles();
   const { user } = useSelector((state) => state.userReducer);
+  const classes = useStyles();
+  const history = useHistory();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,13 +44,13 @@ function ProfileMenu({ logout }) {
   const handleClose = (e) => {
     switch (e.target.id) {
       case "account":
-        window.location.assign("/account");
+        history.push("/account");
         break;
       case "wishlist":
-        window.location.assign("/wishlist");
+        history.push("/wishlist");
         break;
       case "orders":
-        window.location.assign("/orders");
+        history.push("/orders");
         break;
       default:
         break;
