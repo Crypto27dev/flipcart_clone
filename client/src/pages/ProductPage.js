@@ -79,7 +79,7 @@ function ProductPage() {
     if (Object.keys(product).length > 0) {
       setTimeout(() => {
         setIsLoading(false);
-      }, 600);
+      }, 400);
     }
   }, [product]);
 

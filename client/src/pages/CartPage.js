@@ -58,7 +58,7 @@ const Cart = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 600);
+    }, 500);
     if (isAuthenticate) {
       dispatch(getCartItems());
     }

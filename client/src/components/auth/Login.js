@@ -307,7 +307,7 @@ function Login() {
             error={errors.password}
           >
             <InputLabel htmlFor="standard-adornment-password">
-              Set Password
+              Enter Password
             </InputLabel>
             <Input
               id={

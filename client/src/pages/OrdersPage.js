@@ -80,7 +80,7 @@ function OrdersPage() {
     dispatch(getOrderDetails());
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 700);
   }, [isAuthenticate]);
 
 
