@@ -48,7 +48,7 @@ https://flipkart-clone-js.herokuapp.com/
 Clone the project
 
 ```bash
-  git clone https://github.com/dhavalnpatel/flipkart-clone
+  git clone https://github.com/dhavalnpatel/flipkart-clone.git
 ```
 
 Go to the project directory
