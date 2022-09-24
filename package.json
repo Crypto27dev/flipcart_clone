@@ -1,12 +1,13 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fullstack flipkart clone web application",
   "main": "server.js",
+  "repository": "https://github.com/dhavalnpatel/flipkart-clone",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "build-client":"cd client && npm install && npm run build",
+    "start": "npm install && npm run build-client && node server.js"
   },
   "author": "Dhaval Patel",
   "engines": {
