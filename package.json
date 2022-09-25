@@ -6,7 +6,7 @@
   "repository": "https://github.com/dhavalnpatel/flipkart-clone",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"yarn install && cd client && yarn install && yarn build",
+    "build": "yarn install && cd client && yarn install && yarn build",
     "start": "node server.js"
   },
   "author": "Dhaval Patel",
@@ -17,6 +17,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "https": "^1.0.0",
