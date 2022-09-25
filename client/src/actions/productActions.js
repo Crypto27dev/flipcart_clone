@@ -1,5 +1,5 @@
 import * as actionType from "../action-type/productActionType";
-import axios from "axios";
+import axios from "../adapters/axios";
 
 export const getProducts = () => async (dispatch) => {
   try {

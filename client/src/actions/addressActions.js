@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../adapters/axios";
 import * as actionType from "../action-type/addressActionType";
 
 export const updateAddrComState = (newState) => ({

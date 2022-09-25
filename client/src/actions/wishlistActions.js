@@ -1,5 +1,5 @@
 import * as actionType from "../action-type/wishlistActionType";
-import axios from "axios";
+import axios from "../adapters/axios";
 
 export const addToWishlist = (item) => async (dispatch, getState) => {
   const { isAuthenticate, user } = getState().userReducer;

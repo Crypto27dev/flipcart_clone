@@ -18,7 +18,7 @@ import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import { Link } from "react-router-dom";
 import { setIsAuthenticate, setUserInfo } from "../../actions/userActions";
 import { clearCart } from "../../actions/cartActions";
-import axios from "axios";
+import axios from "../../adapters/axios";
 import toastMessage from "../../utils/toastMessage";
 
 const useStyle = makeStyles((theme) => ({

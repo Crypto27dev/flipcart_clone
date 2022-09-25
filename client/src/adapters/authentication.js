@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../adapters/axios";
 
 const authentication = async () => {
   try {

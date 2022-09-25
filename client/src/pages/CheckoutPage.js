@@ -14,7 +14,7 @@ import {
 import clsx from "clsx";
 import AddIcon from "@material-ui/icons/Add";
 
-import axios from "axios";
+import axios from "../adapters/axios";
 import { clearCart, getCartItems } from "../actions/cartActions";
 import { getAddresses } from "../actions/addressActions";
 import { setOrderItems } from "../actions/orderActions";

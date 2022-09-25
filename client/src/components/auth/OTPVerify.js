@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import axios from "../../adapters/axios";
 import OtpInput from "react-otp-input";
 import { useHistory } from "react-router-dom";
 

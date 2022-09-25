@@ -1,5 +1,5 @@
 import * as actionType from "../action-type/orderActionType";
-import axios from "axios";
+import axios from "../adapters/axios";
 
 export const setOrderItems = (cartItems) => {
   let orderItems = [];
