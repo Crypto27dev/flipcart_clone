@@ -6,8 +6,8 @@
   "repository": "https://github.com/dhavalnpatel/flipkart-clone",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-client":"cd client && yarn install && yarn build",
-    "start": "yarn install && yarn build-client && node server.js"
+    "build":"yarn install && cd client && yarn install && yarn build",
+    "start": "node server.js"
   },
   "author": "Dhaval Patel",
   "engines": {
