@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Fullstack flipkart clone web application",
   "main": "server.js",
-  "repository": "https://github.com/dhavalnpatel/flipkart-clone",
+  "repository": "https://github.com/dhavalCode/flipkart-clone",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yarn install && cd client && yarn install && yarn build",

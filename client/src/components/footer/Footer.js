@@ -28,7 +28,7 @@ function Footer() {
         <a
           className={classes.link}
           target="_blank"
-          href="https://github.com/dhavalnpatel"
+          href="https://github.com/dhavalCode"
         >
           Dhaval Patel
         </a>
