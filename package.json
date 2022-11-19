@@ -11,7 +11,7 @@
   },
   "author": "Dhaval Patel",
   "engines": {
-    "node": "16.13.2"
+    "node": "^16.13.2"
   },
   "license": "ISC",
   "dependencies": {
