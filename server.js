@@ -16,20 +16,29 @@ app.use("/api", useRouter);
 
 const port = process.env.PORT || 5000;
 
-app.use((req, res, next) => {
-  if (req.header("x-forwarded-proto") !== "https") {
-    res.redirect(`https://${req.header("host")}${req.url}`);
-  } else {
-    next();
-  }
-});
-
 if (process.env.NODE_ENV == "production") {
+  /* app.use((req, res, next) => {
+    if (req.header("x-forwarded-proto") !== "https") {
+      res.redirect(`https://${req.header("host")}${req.url}`);
+    } else {
+      next();
+    }
+  }); */
+
   const path = require("path");
 
-  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.use(
+    "/static",
+    express.static(path.join(__dirname, "client", "build/static"))
+  );
+  app.use(
+    "/manifest.json",
+    express.static(path.join(__dirname, "client", "build", "manifest.json"))
+  );
 
-  app.get("*", (req, res) => {
+  app.get("/", (req, res) => {
+    app.use(express.static(path.join(__dirname, "../client/build")));
+
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
