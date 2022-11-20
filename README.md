@@ -24,7 +24,7 @@
 
 ## 🚀 LIVE APP
 
-https://flipkart-clone-js.herokuapp.com/
+https://flipkart-web.vercel.app/
 
 
 ##  🖥️ Tech Stack
