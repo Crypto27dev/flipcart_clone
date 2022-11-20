@@ -1,7 +1,6 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "homepage": "https://flipkart-web.vercel.app",
   "proxy":"http://localhost:5000",
   "dependencies": {
     "@material-ui/core": "^4.12.3",
