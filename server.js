@@ -17,13 +17,13 @@ app.use("/api", useRouter);
 const port = process.env.PORT || 5000;
 
 if (process.env.NODE_ENV == "production") {
-  /* app.use((req, res, next) => {
+  app.use((req, res, next) => {
     if (req.header("x-forwarded-proto") !== "https") {
       res.redirect(`https://${req.header("host")}${req.url}`);
     } else {
       next();
     }
-  }); */
+  });
 
   const path = require("path");
 
@@ -31,9 +31,15 @@ if (process.env.NODE_ENV == "production") {
     "/static",
     express.static(path.join(__dirname, "client", "build/static"))
   );
+
   app.use(
     "/manifest.json",
     express.static(path.join(__dirname, "client", "build", "manifest.json"))
+  );
+
+  app.use(
+    "/favicon.ico",
+    express.static(path.join(__dirname, "client", "build", "favicon.ico"))
   );
 
   app.use(express.static(path.join(__dirname, "../client/build")));
