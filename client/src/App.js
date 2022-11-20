@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { isMobile, isDesktop, isTablet, deviceType,    } from 'react-device-detect';
+import { isDesktop} from 'react-device-detect';
 //Custom import
 import Header from "./components/header/Header";
 
@@ -14,6 +14,7 @@ import OrdersPage from "./pages/OrdersPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderFailedPage from "./pages/OrderFailedPage";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
+import monitorImg from './assets/monitors-laptop.png';
 
 //css
 import "./App.css";
@@ -64,7 +65,7 @@ function App() {
         </>
       ) : (
         <div className="container">
-          <img className="img" src="/monitors-laptop.png" alt="Mobile Laptop" />
+          <img className="img" src={monitorImg} alt="Mobile Laptop" />
           <div className="text-container">
             <h2 className="heading">Please use Laptop or desktop</h2>
             <p className="para">

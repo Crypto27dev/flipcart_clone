@@ -23,7 +23,6 @@ import toastMessage from "../../utils/toastMessage";
 import { setIsAuthenticate, setUserInfo } from "../../actions/userActions";
 import { clearCart } from "../../actions/cartActions";
 
-
 const useStyles = makeStyles((theme) => ({
   component: {
     marginTop: 55,
@@ -140,14 +139,34 @@ export default function Sidebar() {
           />
           <Box style={{ paddingLeft: 15 }}>
             <Typography className={classes.smallText}>Hello,</Typography>
-            <Typography className={classes.boldText}>{`${user?.fname} ${user?.lname}`}</Typography>
+            <Typography
+              className={classes.boldText}
+            >{`${user?.fname} ${user?.lname}`}</Typography>
           </Box>
         </Box>
       </Box>
       <Box className={classes.bottom}>
         <Link to="/orders">
           <Box className={clsx(classes.sideBarLink, classes.hoverTab)}>
-            <img src="/order-icon.svg" className={classes.sideBarLinkIcon} />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 18"
+              className={classes.sideBarLinkIcon}
+            >
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                transform="translate(-8.694 -11)"
+              >
+                <ellipse cx="20.557" cy="20" rx="20.557" ry="20" />
+                <path
+                  fill="#2874F1"
+                  d="M9 11v17.108c0 .493.41.892.918.892h4.93v-5.257h-3.033l4.912-4.77 4.972 4.83h-3.035V29h12.417c.507 0 .918-.4.918-.892V11H9z"
+                />
+              </g>
+            </svg>
             <p>MY ORDERS</p>
             <ChevronRightIcon style={{ marginLeft: "auto" }} />
           </Box>

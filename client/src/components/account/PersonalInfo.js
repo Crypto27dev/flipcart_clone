@@ -17,6 +17,7 @@ import { updateEmail, updateUserInfo } from "../../actions/userActions";
 import toastMessage from "../../utils/toastMessage";
 
 import { makeCapitalizeText } from "../../utils/makeCapitalizeText";
+import profileFooterImg from "../../assets/myProfileFooter.png";
 
 const useStyles = makeStyles((theme) => ({
   component: {
@@ -425,7 +426,7 @@ function PersonalInfo() {
         width="100%"
         height="auto"
         style={{ verticalAlign: "middle" }}
-        src="/myProfileFooter.png"
+        src={profileFooterImg}
       />
     </>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
+import successImg from '../assets/success.png'
 
 function OrderSuccessPage() {
   useEffect(() => {
@@ -21,8 +22,8 @@ function OrderSuccessPage() {
         <div>
           <img
             style={{ width: "400px", maxWidth: "100%" }}
-            src="success.png"
-            alt=""
+            src={successImg}
+            alt="Order Success"
           />
           <div
             style={{
