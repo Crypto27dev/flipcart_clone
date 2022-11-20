@@ -70,7 +70,6 @@ export const getCartItems = () => async (dispatch, getState) => {
   if (isAuthenticate) {
     try {
       const { data } = await axios.get(`/cart/get-items/${user._id}`);
-      console.log(data.length);
       if (data.length > 0) {
         data?.map((value) => {
           var isExist = false;
